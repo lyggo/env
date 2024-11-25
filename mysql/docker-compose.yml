@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0.33
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: RootQwe123  # 设置root用户密码
+      MYSQL_DATABASE: user
+      MYSQL_USER: zgt                       # 自定义用户
+      MYSQL_PASSWORD: Qwe123      # 自定义用户密码
+    ports:
+      - "3306:3306"                             # 映射MySQL端口
+    volumes:
+      - ./data:/var/lib/mysql                  # 数据持久化目录
+      - ./config/my.cnf:/etc/mysql/my.cnf      # 自定义配置文件
+      - ./logs:/var/log/mysql                  # 日志持久化
+    networks:
+      - mysql_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: "2g"
+        reservations:
+          cpus: "1"
+          memory: "2g"
+
+networks:
+  mysql_network:
+    driver: bridge
+
