@@ -1,0 +1,29 @@
+services:
+  redis:
+    image: redis:6.2-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+      - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./logs:/var/log/redis
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    networks:
+      - redis-net
+    restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
+
+networks:
+  redis-net:
+    driver: bridge
+
+volumes:
+  redis-data:
+    driver: local
+

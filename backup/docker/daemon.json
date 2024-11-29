@@ -1,1 +1,5 @@
-{"registry-mirrors": ["https://hub.geekery.cn"]}
+{
+  "registry-mirrors": [
+    "https://hub.geekery.cn"
+  ]
+}
