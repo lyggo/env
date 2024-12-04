@@ -1,0 +1,22 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.11-management-alpine
+    container_name: rabbitmq
+    hostname: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=securepassword
+      - RABBITMQ_ERLANG_COOKIE=supersecreterlangcookie
+    ports:
+      - "5672:5672"    # AMQP
+      - "15672:15672"  # 管理界面
+    volumes:
+      - ./conf:/etc/rabbitmq          # 持久化配置文件
+      - ./data:/var/lib/rabbitmq      # 持久化数据
+    networks:
+      - rabbitmq_network
+
+networks:
+  rabbitmq_network:
+    driver: bridge
+
