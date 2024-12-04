@@ -1,3 +1,3 @@
 # env
 
-test git hook
+env docker compose
