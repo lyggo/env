@@ -1,3 +1,3 @@
 # env
 
-env docker compose
+env docker compose test
